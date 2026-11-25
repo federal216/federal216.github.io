@@ -1,3 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://federal216.github.io/lambospec-ai/sitemap.xml
+
+Sitemap: https://federal216.github.io/sitemap.xml
+Sitemap: https://federal216.github.io/cabinetscan/sitemap.xml
+Sitemap: https://federal216.github.io/rolex-counterfeit-detector-chronospec/sitemap.xml
