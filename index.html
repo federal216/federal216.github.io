@@ -1804,10 +1804,15 @@
         <!-- PAYMENT METHOD TABS: 100% AUTOMATED ONLY -->
         <div class="grid grid-cols-2 gap-3 mb-5">
           <button id="tabCardBtn" type="button" onclick="switchPaymentTab('card')" class="py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-orange-500/20 text-orange-400 border border-orange-500/40 flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
-            <span>💳</span><span>Card / Apple &amp; Google Pay</span>
+            <span>💳</span><span>Card / Apple &amp; GPay</span>
           </button>
-          <button id="tabCryptoBtn" type="button" onclick="switchPaymentTab('crypto')" class="py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
-            <span>🪙</span><span>Crypto (Instant Auto-Verify)</span>
+          <button id="tabCryptoBtn" type="button" onclick="switchPaymentTab('crypto')" class="relative py-3 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition bg-emerald-950/60 text-emerald-300 border-2 border-emerald-500/60 hover:border-emerald-400 flex items-center justify-center space-x-2 cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:scale-[1.02]">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+            <span>🪙 Crypto (No KYC)</span>
+            <span class="text-[9px] bg-emerald-400 text-black font-black px-1.5 py-0.5 rounded uppercase tracking-tight ml-1">VIP</span>
           </button>
         </div>
 
@@ -1817,6 +1822,16 @@
           <div id="cardErrorBox" class="hidden p-3 rounded-xl bg-rose-950/80 border border-rose-500 text-rose-300 text-xs font-mono flex items-center space-x-2 shadow-lg">
             <span class="text-base">⚠️</span>
             <span id="cardErrorMsg">Please check your details.</span>
+          </div>
+
+          <!-- SHINY CRYPTO VIP TEASER BANNER INSIDE CARD TAB -->
+          <div onclick="switchPaymentTab('crypto')" class="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-zinc-950 to-teal-950/80 border-2 border-emerald-500/40 hover:border-emerald-400 text-center cursor-pointer transition-all shadow-[0_0_25px_rgba(16,185,129,0.25)] hover:scale-[1.01] group">
+            <div class="flex items-center justify-center gap-2 text-xs font-mono font-black text-emerald-300 uppercase tracking-wide">
+              <span class="text-base group-hover:scale-125 transition-transform">🪙</span>
+              <span>Prefer 100% Anonymous Checkout? Pay with USDT / USDC</span>
+              <span class="text-emerald-400 text-sm font-black">&rarr;</span>
+            </div>
+            <div class="text-[10px] text-zinc-400 font-mono mt-0.5">Instant On-Chain Settlement · Zero KYC · No Card Declines or Bank Records</div>
           </div>
 
           <div class="bg-gradient-to-b from-zinc-900/90 to-black/80 border border-zinc-800 rounded-2xl p-6 sm:p-7 text-center space-y-4">
@@ -1865,6 +1880,18 @@
 
         <!-- TAB 2: CRYPTO (USDT / USDC) -->
         <div id="tabCryptoContent" class="hidden space-y-4">
+          <!-- GLOWING VIP CRYPTO INCENTIVE BANNER -->
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-950 via-zinc-950 to-teal-950 border-2 border-emerald-400/80 shadow-[0_0_35px_rgba(16,185,129,0.35)] text-center space-y-1 relative overflow-hidden">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 font-mono text-[11px] font-black uppercase tracking-wider">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              VIP WEB3 SETTLEMENT • 100% ANONYMOUS
+            </div>
+            <h4 class="text-sm font-black text-white">Direct Cold/Hot Wallet Instant Unlock</h4>
+            <p class="text-[11px] text-zinc-300 max-w-md mx-auto leading-relaxed">
+              No KYC verification, no card decline risk, zero bank paper trail. 1-second auto-audit unlock upon blockchain broadcast.
+            </p>
+          </div>
+
           <div class="bg-gradient-to-b from-zinc-900/80 to-black/60 border border-zinc-800 rounded-2xl p-5 space-y-4">
             <div class="flex gap-2">
               <button id="coinUsdtBtn" type="button" onclick="switchCryptoCoin('usdt')" class="flex-1 py-2 rounded-lg text-xs font-bold font-mono transition bg-orange-500/20 text-orange-400 border border-orange-500/40 flex items-center justify-center space-x-1">
@@ -2107,11 +2134,14 @@
       const cardContent = document.getElementById('tabCardContent');
       const cryptoContent = document.getElementById('tabCryptoContent');
 
-      const activeClass = 'py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-orange-500/20 text-orange-400 border border-orange-500/40 flex items-center justify-center space-x-2 cursor-pointer shadow-sm';
-      const inactiveClass = 'py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white flex items-center justify-center space-x-2 cursor-pointer shadow-sm';
+      const cardActive = 'py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-orange-500/20 text-orange-400 border border-orange-500/40 flex items-center justify-center space-x-2 cursor-pointer shadow-sm';
+      const cardInactive = 'py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white flex items-center justify-center space-x-2 cursor-pointer shadow-sm';
 
-      if (cardBtn) cardBtn.className = (tab === 'card') ? activeClass : inactiveClass;
-      if (cryptoBtn) cryptoBtn.className = (tab === 'crypto') ? activeClass : inactiveClass;
+      const cryptoActive = 'relative py-3 px-3 rounded-xl text-xs font-black uppercase tracking-wider transition bg-gradient-to-r from-emerald-500/30 to-teal-500/20 text-emerald-300 border-2 border-emerald-400 flex items-center justify-center space-x-2 cursor-pointer shadow-[0_0_25px_rgba(16,185,129,0.5)] scale-[1.02]';
+      const cryptoInactive = 'relative py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition bg-emerald-950/40 text-emerald-300 border border-emerald-500/50 hover:border-emerald-300 flex items-center justify-center space-x-2 cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.2)]';
+
+      if (cardBtn) cardBtn.className = (tab === 'card') ? cardActive : cardInactive;
+      if (cryptoBtn) cryptoBtn.className = (tab === 'crypto') ? cryptoActive : cryptoInactive;
 
       if (cardContent) cardContent.classList.add('hidden');
       if (cryptoContent) cryptoContent.classList.add('hidden');
