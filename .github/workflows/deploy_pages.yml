@@ -7,6 +7,8 @@ on:
     paths:
       - 'index.html'
       - 'public/**'
+      - 'sitemap.xml'
+      - 'robots.txt'
       - '.github/workflows/deploy_pages.yml'
   workflow_dispatch:
 
